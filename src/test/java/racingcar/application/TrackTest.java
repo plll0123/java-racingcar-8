@@ -2,6 +2,8 @@ package racingcar.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -18,6 +20,16 @@ class TrackTest {
         RaceInformation raceInformation = RaceFixture.create(car);
         Track track = new Track(null, raceInformation);
         assertThat(track.getDisplayFormat(car)).isEqualTo(expectDisplay);
+    }
+
+    @Test
+    void 레이스_종료시_우승자를_기록한다() {
+        Car car1 = new Car("one", 1);
+        Car car2 = new Car("two", 2);
+        RaceInformation raceInformation = new RaceInformation(3, List.of(car1, car2));
+        Track track = new Track(null, raceInformation);
+        track.endRace();
+        assertThat(track.getRecord()).isEqualTo("최종 우승자 : two");
     }
 
 }
