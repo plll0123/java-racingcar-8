@@ -7,5 +7,6 @@ public class ExceptionMessage {
     }
 
     public static final String CAR_NAME_TOO_LONG = "자동차 이름이 너무 깁니다.";
+    public static final String INVALID_RACER_NAME = "레이서 이름을 잘못 입력하였습니다.";
 
 }
