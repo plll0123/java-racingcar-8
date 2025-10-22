@@ -7,6 +7,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
+import racingcar.application.Car;
+import racingcar.application.RaceInformation;
 
 class ReaderTest {
 
@@ -37,6 +39,21 @@ class ReaderTest {
         this.source = source;
 
         assertThatThrownBy(reader::read).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 자동차_객체_목록을_반환한다() {
+        this.source = "pobbi,wtc,plll";
+        this.roundCount = 7;
+
+        RaceInformation raceInformation = reader.read();
+        assertThat(raceInformation.cars()).hasSize(3)
+                .contains(
+                        new Car("pobbi"),
+                        new Car("wtc"),
+                        new Car("plll")
+                );
+        assertThat(raceInformation.roundCount()).isEqualTo(roundCount);
     }
 
 }

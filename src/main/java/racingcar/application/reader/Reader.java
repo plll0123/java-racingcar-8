@@ -5,17 +5,18 @@ import java.util.Arrays;
 import java.util.List;
 import racingcar.application.Car;
 import racingcar.application.ExceptionMessage;
+import racingcar.application.RaceInformation;
 
 public class Reader {
 
     static final String DEFAULT_DELIMITER = ",";
 
-    public Object read() {
+    public RaceInformation read() {
         Config config = doRead();
         String carName = config.carName;
         validateInputSource(carName);
         List<Car> cars = parseAndConvert(carName);
-        return new Object[] {cars};
+        return new RaceInformation(config.roundCount, cars);
     }
 
     Config doRead() {
