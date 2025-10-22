@@ -1,7 +1,19 @@
 package racingcar;
 
+import racingcar.application.RaceInformation;
+import racingcar.application.Track;
+import racingcar.application.reader.Reader;
+import racingcar.application.writer.Writer;
+
 public class Application {
+
     public static void main(String[] args) {
-        // TODO: 프로그램 구현
+        RaceInformation raceInformation = new Reader().read();
+        Track track = new Track(new RandomProgressProgressStrategy(), raceInformation);
+        track.raceStart();
+        track.endRace();
+        String result = track.getRecord();
+        new Writer().write(result);
     }
+
 }
