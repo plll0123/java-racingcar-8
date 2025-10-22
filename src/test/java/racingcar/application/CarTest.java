@@ -10,6 +10,11 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class CarTest {
 
+    @Test
+    void 자동차_이름_최대_길이_검증() {
+        assertThat(Car.MAX_NAME_LENGTH).isSameAs(5);
+    }
+
     @ParameterizedTest
     @NullSource
     @ValueSource(strings = {"", "  ", "123456"})
