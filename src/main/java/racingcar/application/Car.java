@@ -26,7 +26,7 @@ public class Car {
 
     private void validateCarName(String carName) {
         if (carName == null || carName.isBlank() || carName.length() > MAX_NAME_LENGTH) {
-            throw new IllegalArgumentException("자동차 이름이 너무 깁니다.");
+            throw new IllegalArgumentException(ExceptionMessage.CAR_NAME_TOO_LONG);
         }
     }
 

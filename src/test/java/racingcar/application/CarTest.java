@@ -16,7 +16,7 @@ class CarTest {
     void invalid_car_name(String source) {
         assertThatThrownBy(() -> new Car(source))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("자동차 이름이 너무 깁니다.");
+                .hasMessage(ExceptionMessage.CAR_NAME_TOO_LONG);
     }
 
     @Test
