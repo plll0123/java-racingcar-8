@@ -8,55 +8,39 @@ public class Track {
     private static final String DISPLAY_FORMAT = "%s : %s";
 
     private final ProgressStrategy progressStrategy;
+
     private final List<Car> cars;
+
     private final int roundCount;
 
-    private final StringBuilder displayBoard = new StringBuilder();
-    private final String progressBarFormat;
+    private final DisplayBoard displayBoard;
 
     private final List<String> winners = new ArrayList<>();
 
-    public Track(ProgressStrategy progressStrategy, RaceInformation raceInformation) {
-        this(progressStrategy, raceInformation.cars(), raceInformation.roundCount(), "-");
-    }
-
-    public Track(ProgressStrategy progressStrategy, List<Car> cars, int roundCount, String progressBarFormat) {
+    public Track(ProgressStrategy progressStrategy, RaceInformation raceInformation, DisplayBoard displayBoard) {
         this.progressStrategy = progressStrategy;
-        this.cars = cars;
-        this.roundCount = roundCount;
-        this.progressBarFormat = progressBarFormat;
+        this.cars = raceInformation.cars();
+        this.roundCount = raceInformation.roundCount();
+        this.displayBoard = displayBoard;
     }
 
     public void raceStart() {
         for (int i = 0; i < roundCount; i++) {
-            cars.forEach(this::takeTurn);
-            displayBoard.append("\n");
+            cars.forEach(e -> e.advance(progressStrategy));
+            displayBoard.recordStatus(cars);
         }
     }
 
     public void endRace() {
-        int asInt = cars.stream()
+        int maxMileage = cars.stream()
                 .mapToInt(Car::getMileage)
                 .max()
                 .orElse(0);
         cars.stream()
-                .filter(it -> it.getMileage() == asInt)
+                .filter(it -> it.getMileage() == maxMileage)
                 .forEach(it -> winners.add(it.getName()));
+        displayBoard.recordWinner(winners);
+        displayBoard.print();
     }
 
-    public String getRecord() {
-        return displayBoard.append("최종 우승자 : ")
-                .append(String.join(", ", winners))
-                .toString();
-    }
-
-    protected String getDisplayFormat(Car car) {
-        String progressBar = progressBarFormat.repeat(Math.max(0, car.getMileage()));
-        return DISPLAY_FORMAT.formatted(car.getName(), progressBar);
-    }
-
-    private void takeTurn(Car car) {
-        car.advance(progressStrategy);
-        displayBoard.append(getDisplayFormat(car)).append("\n");
-    }
 }
