@@ -1,8 +1,7 @@
 package racingcar.application.writer;
 
-public class Writer {
+public interface Writer {
 
-    public void write(String result) {
-        System.out.println(result);
-    }
+    void write(String result);
+
 }
