@@ -6,7 +6,7 @@ public class RandomProgressStrategy implements ProgressStrategy {
 
     static final int MIN_NUMBER = 0;
     static final int MAX_NUMBER = 9;
-    public static final int THRESHOLD = 4;
+    static final int THRESHOLD = 4;
 
     @Override
     public boolean movable() {
