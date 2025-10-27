@@ -5,8 +5,6 @@ import java.util.List;
 
 public class Track {
 
-    private static final String DISPLAY_FORMAT = "%s : %s";
-
     private final ProgressStrategy progressStrategy;
 
     private final List<Car> cars;
